@@ -79,6 +79,9 @@ int run_basic_demo(void) {
       return -1;
     }
     
+    //USE TERNARY OPERATOR FOR WIFEXITED (?)
+    printf("Producer child (PID: %d) exited with status %d\n", producer_pid, WIFEXITED(producer_status) ? WEXITSTATUS(producer_status): 1);
+    
     //waiting for consumer
     //add error handling
     if(waitpid(consumer_pid, &consumer_status, 0) == -1) {
@@ -86,9 +89,9 @@ int run_basic_demo(void) {
       return -1;
     }
     
-    //use WEXITSTATUS
-    printf("Producer child (PID: %d) exited with status %d\n", producer_pid, WEXITSTATUS(producer_status));
-    printf("Consumer child (PID: %d) exited with status %d\n", consumer_pid, WEXITSTATUS(consumer_status));
+    //USE WIFEXITED again (ternary ? operator)
+    printf("Consumer child (PID: %d) exited with status %d\n", consumer_pid, WIFEXITED(consumer_status) ? WEXITSTATUS(consumer_status) : 1);
+
     return 0;
 }
 

@@ -131,6 +131,8 @@ int run_multiple_pairs(int num_pairs) {
           pids[pid_count++] = producer_pid;
       } else {
         perror("fork");
+        close(pipe_fd[0]);
+        close(pipe_fd[1]);
         return -1;
       }
       
@@ -144,6 +146,8 @@ int run_multiple_pairs(int num_pairs) {
           pids[pid_count++] = consumer_pid;
       } else {
           perror("fork");
+          close(pipe_fd[0]);
+          close(pipe_fd[1]);
           return -1;
       }
       
